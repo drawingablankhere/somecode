@@ -35,3 +35,8 @@ app.listen(PORT, () => {
   console.log(`🚀 listening on http://localhost:${PORT}`);
   console.log(`🔧 settings UI at http://localhost:${PORT}/settings/`);
 });
+
+const path = require('path');
+// serve dashboard SPA
+app.use('/dashboard',
+  express.static(path.join(__dirname, '../public/dashboard')));

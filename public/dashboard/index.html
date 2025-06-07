@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Grow Tent Dashboard</title>
+  <!-- Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/dashboard.css"/>
+</head>
+<body>
+  <header>
+    <h1>Grow Tent Dashboard</h1>
+    <button id="btn-config">Configure Layout</button>
+  </header>
+
+  <section id="floor-section" class="sensor-section">
+    <h2>Floor Sensors</h2>
+    <div class="sensor-grid" id="floor-grid"></div>
+  </section>
+
+  <section id="room-section" class="sensor-section">
+    <h2>Room Sensors</h2>
+    <div class="sensor-grid" id="room-grid"></div>
+  </section>
+
+  <section id="outside-section" class="sensor-section">
+    <h2>Intake & Outside</h2>
+    <div class="sensor-grid" id="outside-grid"></div>
+  </section>
+
+  <section class="chart-section">
+    <h2>Last Hour Averages</h2>
+    <canvas id="historyChart"></canvas>
+  </section>
+
+  <!-- Configuration Modal -->
+  <div id="config-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Sensor → Section Mapping</h3>
+      <form id="mapping-form"></form>
+      <button id="save-mapping">Save</button>
+      <button id="cancel-mapping">Cancel</button>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
