@@ -1,0 +1,67 @@
+{
+  "name": "production-vpd-controller",
+  "version": "5.1.0",
+  "description": "Production-ready VPD Controller with enterprise features",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "NODE_ENV=development nodemon src/app.js",
+    "test": "jest --coverage",
+    "test:unit": "jest tests/unit/",
+    "test:integration": "jest tests/integration/",
+    "lint": "eslint src/ tests/",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:dry-run": "./scripts/deploy.sh --dry-run",
+    "health-check": "curl -f http://localhost:3000/health/ready || exit 1",
+    "secrets:validate": "node scripts/secrets-manager.js validate",
+    "docker:build": "docker build -t vpd-controller:latest .",
+    "docker:run": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "docs:serve": "npx http-server docs/ -p 8080",
+    "validate:env": "chmod +x scripts/*.sh && ./scripts/validate-env.sh",
+    "postinstall": "npm run validate:env",
+    "precommit": "npm run lint && npm run test:unit",
+    "prepush": "npm run test && npm run deploy:dry-run"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit",
+      "pre-push": "npm run prepush"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/**/*.test.js",
+      "!src/**/index.js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.js",
+      "**/src/**/*.test.js"
+    ],
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"]
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+    "cors": "^2.8.5",
+    "morgan": "^1.10.0",
+    "express-rate-limit": "^6.7.0",
+    "redis": "^4.6.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.0",
+    "nodemon": "^2.0.22",
+    "eslint": "^8.40.0",
+    "husky": "^8.0.3",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
